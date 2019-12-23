@@ -76,6 +76,7 @@ $query5 = mysqli_query($koneksi, "SELECT distinct user.nama,user.id_user FROM pe
           echo '
           <a href="dashboard.php?tengah=penggajian_filter"  ><button aria-hidden="true">Tambah Gaji</button></a>
           ';
+          // <a href="dashboard.php?tengah=tanggal_merah"  ><button aria-hidden="true">Data Tanggal Merah</button></a>
         }
         ?>
         <form method="post" action="dashboard.php?tengah=penggajian_data">

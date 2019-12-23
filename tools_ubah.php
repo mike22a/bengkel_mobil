@@ -26,6 +26,16 @@ $sql = mysqli_query($koneksi, "SELECT tools.*,user.nama,presensi_harian.tanggal 
 // exit;
 // while (
 $tmp = mysqli_fetch_object($sql);
+
+if (is_null($tmp))
+{
+  $nama = 'Teknisi belum melakukan absensi.';
+  $tanggal = '0';
+}else{
+  $nama = $tmp->nama; 
+  $tanggal = $tmp->tangal;
+}
+
 // {
 // print_r($tmp);
 
@@ -41,7 +51,7 @@ $tmp = mysqli_fetch_object($sql);
  <div class="row mt">
   <div class="col-lg-12">
     <div class="form-panel">
-      <h4 class="mb"><i class="fa fa-angle-right"></i> <?= $tmp->nama ?></h4>
+      <h4 class="mb"><i class="fa fa-angle-right"></i> <?= $nama ?></h4>
       <form class="form-horizontal style-form" method="post" action="tools_proses_ubah.php">
         <input name="id" type="hidden" class="form-control" value="<?= $id ?>">
         <!-- <?= $tmp->id_tools ?> -->
@@ -49,7 +59,7 @@ $tmp = mysqli_fetch_object($sql);
         <div class="form-group">
           <label class="col-sm-2 col-sm-2 control-label">Tanggal</label>
           <div class="col-sm-10">
-            <input name="tanggal" type="text" class="form-control" value="<?= $tmp->tanggal ?>" readonly>
+            <input name="tanggal" type="text" class="form-control" value="<?= $tanggal ?>" readonly>
           </div>
         </div>
         <!-- <div class="form-group">

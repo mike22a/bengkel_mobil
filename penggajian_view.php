@@ -18,9 +18,15 @@ if (isset($_GET['page'])) {
   $noPage = 1;
 }
 
+function rounding($val)
+{
+  return round($val,3);
+}
+
 $mulai = isset($_REQUEST['mulai']) ? $_REQUEST['mulai'] : ''; 
 $selesai = isset($_REQUEST['selesai']) ? $_REQUEST['selesai'] : '';
 $cari = isset($_REQUEST['cari']) ? $_REQUEST['cari'] : '';
+$merah = isset($_REQUEST['jml_tgl_merah']) ? $_REQUEST['jml_tgl_merah'] : '';
 
 $date1=date_create("$mulai");
 $date2=date_create("$selesai");
@@ -90,12 +96,12 @@ $cek2 = mysqli_query($koneksi, "SELECT * FROM penggajian where tanggal_mulai <= 
 // exit;
 
 if ($cek1 || $cek2) {
-$tipe = 0;
-$note = 'Data sudah pernah direkap ';
+  $tipe = 0;
+  $note = 'Data sudah pernah direkap ';
 }else{
 // $query = mysqli_query($koneksi, "INSERT INTO penggajian values ('','$id', '$mulai','$selesai','$tanggal_gaji','$bonus','$bobot_total','$lembur','$tools','$masuk','$rekap_upah_lembur','$rekap_upah_harian','$rekap_upah_makan')");
-$tipe = 1;
-$note = 'Data sudah pernah direkap ';
+  $tipe = 1;
+  $note = 'Data sudah pernah direkap ';
 }
 ?>
 
@@ -109,7 +115,16 @@ $note = 'Data sudah pernah direkap ';
 
       <table class="table table-striped table-advance table-hover">
         <h4><i class="fa fa-angle-right"></i><?= $cari ?> (</i><?= $mulai ?> - </i><?= $selesai ?>)</h4>        
+        <form method="post" action="dashboard.php?tengah=penggajian_filter">
+          <span class="input-group-btn">
+            <button class="btn btn-default" aria-hidden="true" type="submit"> Kembali</button>
+          </span>
+          <input name="cari" type="hidden" class="form-control" value="<?= $result->nama ?>">        
+          <input name="mulai" type="hidden" class="form-control" value="<?= $result->tanggal_mulai ?>">        
+          <input name="selesai" type="hidden" class="form-control" value="<?= $result->tanggal_selesai ?>">        
+        </form>
         <hr>
+
         <thead>
           <tr>
             <th> </th>
@@ -141,7 +156,7 @@ $note = 'Data sudah pernah direkap ';
             <td></td>
             <td></td>
             <td></td>
-            <td><?= rupiah($total2) ?></td>              
+            <td><?= rupiah($total1) ?></td>              
           </tr>
           <tr>
             <td></td>
@@ -184,37 +199,142 @@ $note = 'Data sudah pernah direkap ';
                   echo '
                   <td>Tanggal Rekap</td>
                   <td>
-                    <div class="col-sm-6">
-                      <input name="tanggal" type="date" class="form-control" placeholder="2019-12-2">
-                    </div>
+                  <div class="col-sm-6">
+                  <input name="tanggal" type="date" class="form-control" placeholder="2019-12-2">
+                  </div>
                   </td>
                   <td>
-                    <button  aria-hidden="true" type="submit">Rekap Gaji</button>
-                      ';
-                      ?>
-                  </td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </div>
+                  <button  aria-hidden="true" type="submit">Rekap Gaji</button>
+                  ';
+                  ?>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
             </div>
-          </form>
-        </tbody>
-      </table>
+          </div>
+        </form>
+      </tbody>
+    </table>
 
    <!--        <tr>
             <td>Jumlah Tools</td>
             <td><?= $tools ?></td>
           </tr> -->
 
-          <form method="post" action="dashboard.php?tengah=penggajian_filter">
-            <span class="input-group-btn">
-              <button class="btn btn-default" aria-hidden="true" type="submit"> Kembali</button>
-            </span>
-            <input name="cari" type="hidden" class="form-control" value="<?= $result->nama ?>">        
-            <input name="mulai" type="hidden" class="form-control" value="<?= $result->tanggal_mulai ?>">        
-            <input name="selesai" type="hidden" class="form-control" value="<?= $result->tanggal_selesai ?>">        
-          </form>
+
+
+          <! -- MODALS -->
+          <div class="showback">
+           <!-- <h4><i class="fa fa-angle-right"></i> Modal Example</h4> -->
+           <!-- Button trigger modal -->
+           <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">
+            Detail Bonus
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel">Detail Perhitungan Bonus</h4>
+                </div>
+                <div class="modal-body">
+                  <!-- <h4> 1. Bobot </h4>
+                  <h4> 2. Nilai Perhitungan </h4>
+                  <h4> 3. Hasil kali nilai dan bobot </h4> -->
+                  <h4> Perhitungan </h4>
+                  <table class="table table-striped table-advance table-hover">
+                    <thead>
+                      <tr>                      
+                        <th></th>
+                        <th> Bobot </th>
+                        <th> Nilai </th>
+                        <th> Total </th>
+                      </tr>  
+                    </thead>
+                    <tbody>
+
+                      <tr> 
+                        <td> Tools </td>                      
+                        <td> <?= $bobot_tools ?></td>
+                        <td> <?= rounding($hasil_tools) ?></td>
+                        <td> <?= rounding($bobot_tools*$hasil_tools) ?></td>
+                      </tr>
+                      <tr>
+                        <td> Customer </td>
+                        <td> <?= $bobot_customer ?> </td>
+                        <td> <?= rounding($hasil_customer) ?> </td>
+                        <td> <?= rounding($bobot_customer*$hasil_customer) ?> </td>
+                      </tr>
+                      <tr>
+                        <td> Presensi </td>
+                        <td> <?= $bobot_presensi ?> </td>
+                        <td> <?= rounding($hasil_presensi) ?> </td>
+                        <td> <?= rounding($bobot_presensi*$hasil_presensi) ?> </td>
+                      </tr>
+                      <tr>
+                        <td> Pengetahuan </td>
+                        <td> <?= $bobot_pengetahuan ?> </td>
+                        <td> <?= rounding($hasil_pengetahuan) ?> </td>
+                        <td> <?= rounding($bobot_pengetahuan*$hasil_pengetahuan) ?> </td>
+                      </tr>                    
+                      <tr>
+                        <td> Durasi  </td>
+                        <td> <?= $bobot_durasi ?> </td>
+                        <td> <?= rounding($hasil_durasi) ?> </td>
+                        <td> <?= rounding($bobot_durasi*$hasil_durasi) ?> </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td> Jumlah </td>
+                        <td> <?= rounding($hasil_total) ?></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <h4> Nilai Bobot </h4>
+                  <?php
+                  $query6 = mysqli_query($koneksi, "SELECT * FROM bobot_gaji");
+                      // $nilai_bobot = mysqli_fetch_object($query6);
+                  ?>
+                  <table class="table table-advance table-hover">
+                      <!-- <th> Batas Bawah </th>
+                        <th> Batas Atas </th> -->
+                        <th> Range Nilai </th>
+                        <th> Nominal </th>
+                        <?php
+                        while ($result = mysqli_fetch_object($query6)) {
+                          if ($hasil_total >= $result->dari && $hasil_total <= $result->sampai) {
+                           // <div class="alert alert-success">
+                           echo '                        
+                           <tr class="bg-success">
+                           <td> <b><i> ' . $result->dari . ' - ' . $result->sampai . ' </i></b> </td>
+                           <td> <b><i> ' . $result->besaran_gaji . '  </i></b> </td>
+                           </tr>
+                           ';
+                           // </div>
+                         }else{
+                          echo '                        
+                          <tr>
+                          <td> ' . $result->dari . ' - ' . $result->sampai . ' </td>
+                          <td> ' . $result->besaran_gaji . ' </td>
+                          </tr>
+                          ';
+                        }
+                      } 
+                      ?>
+                    </table>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>              
+          </div><!-- /showback -->
         </div><!-- /content-panel -->
       </div><!-- /col-md-12 -->
     </div><!-- /row -->

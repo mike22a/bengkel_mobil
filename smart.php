@@ -1,14 +1,22 @@
 <?php
 
 $tanggal = date("Y-m-d");
-$hari = $diff->d;
+$hari = $diff->d - $merah;
+
+// $tmpHari = $hari;
+
+// for ($i=0; $i < $tmpHari; $i++) { 
+// 	if (condition) {
+// 		$hari -= $hari;
+// 	}
+// }
 
 // $date1=date_create("$masuk");
 // $date2=date_create("$selesai");
 // $diff=date_diff($date1,$date2);
 
 // bobot masing-masing
-$bobot_tools = 0.03;
+$bobot_tools = 0.05;
 $bobot_customer = 0.35;
 $bobot_presensi = 0.4;
 $bobot_pengetahuan = 0.1;
@@ -110,9 +118,12 @@ if ($presensi < '0.8' && $presensi >= '0') {
 	$presensi2 = $presensi_min;
 }elseif ($presensi < '1' && $presensi >= '0.8') {
 	$presensi2 = 60;
-}elseif ($presensi == '1') {
+// }elseif ($presensi == '1') {
+}else{
 	$presensi2 = $presensi_max;
 }
+// echo "$presensi";
+
 $hasil_presensi = rumus($presensi2,$presensi_min,$presensi_max);
 
 
