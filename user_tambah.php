@@ -49,6 +49,7 @@ aksesall();
         <div class="form-group">
           <label class="col-sm-2 col-sm-2 control-label"></label>
           <div class="col-sm-10">
+            <a onclick="back_page()" class="btn btn-round btn-warning">Kembali</a>
             <button type="submit" class="btn btn-round btn-primary">Tambah</button>
           </div>
         </div>
@@ -57,3 +58,8 @@ aksesall();
   </div><!-- col-lg-12-->       
 </div><!-- /row -->
 </section><! --/wrapper -->
+<script>
+  function back_page(){
+      window.history.go(-1);
+    }
+    </script>

@@ -40,7 +40,8 @@ $query2 = mysqli_query($koneksi, "SELECT * FROM $loc_tools WHERE presensi_harian
         <div class="form-group">    
           <label class="col-sm-2 col-sm-2 control-label">Nama Teknisi</label>
           <div class="col-sm-10">
-            <input name="nama" type="text" class="form-control" value="<?= $result->nama ?>"  <?php if ($_SESSION['akses'] != 'admin') { echo"readonly"; }?>>
+            <!-- <input name="nama" type="text" class="form-control" value="<?= $result->nama ?>"  <?php if ($_SESSION['akses'] != 'admin') { echo"readonly"; }?>> -->
+            <input name="nama" type="text" class="form-control" value="<?= $result->nama ?>"  readonly>
           </div>
         </div>
         <div class="form-group">

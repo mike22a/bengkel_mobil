@@ -28,19 +28,19 @@ $cari = isset($_REQUEST['cari']) ? $_REQUEST['cari'] : '';
 if ($akses_user == 'teknisi') {
   $cari = $nama_user;
 }
-$query = mysqli_query($koneksi, "SELECT presensi_harian.*,user.nama,presensi_lembur.jam FROM $loc_presensi where nama like '%$cari%' limit $offset,$dataPerPage");
+$query = mysqli_query($koneksi, "SELECT presensi_harian.*,user.nama,presensi_lembur.jam FROM $loc_presensi where nama like '%$cari%' order by tanggal desc limit $offset,$dataPerPage ");
 
 // print_r($query);
 // exit;
 
-if(mysqli_num_rows($query)==0) {
-  echo "
-  <script>
-  alert('Data tidak ada');
-  // window.location.href='dashboard.php';
-  </script>
-  ";
-}
+// if(mysqli_num_rows($query)==0) {
+//   echo "
+//   <script>
+//   alert('Data tidak ada');
+//   // window.location.href='dashboard.php';
+//   </script>
+//   ";
+// }
 
 ?>
 

@@ -1,8 +1,8 @@
 <?php
 
 autentikasi();
-aksesadmin();
-// aksesowner();
+// aksesadmin();
+aksesowner();
 koneksi_db();
 
 // if ()

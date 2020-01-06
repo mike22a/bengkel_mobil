@@ -33,7 +33,7 @@ if (is_null($tmp))
   $tanggal = '0';
 }else{
   $nama = $tmp->nama; 
-  $tanggal = $tmp->tangal;
+  $tanggal = $tmp->tanggal;
 }
 
 // {

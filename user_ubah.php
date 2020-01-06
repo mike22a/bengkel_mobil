@@ -19,7 +19,7 @@ $result = mysqli_fetch_object($query);
     <div class="form-panel">
       <h4 class="mb"><i class="fa fa-angle-right"></i> Data <?= $result->nama ?></h4>
       <form class="form-horizontal style-form" method="post" action="user_proses_ubah.php">
-        <input name="id" type="hidden" class="form-control" value="<?= $result->id_pengguna ?>">
+        <input name="id" type="hidden" class="form-control" value="<?= $result->id_user ?>">
         <div class="form-group">
           <label class="col-sm-2 col-sm-2 control-label">Nama</label>
           <div class="col-sm-10">

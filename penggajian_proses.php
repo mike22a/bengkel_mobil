@@ -18,7 +18,7 @@ $lembur = isset($_REQUEST['lembur']) ? $_REQUEST['lembur'] : "";
 $upah_harian = isset($_REQUEST['upah_harian']) ? $_REQUEST['upah_harian'] : "";
 $upah_makan = isset($_REQUEST['upah_makan']) ? $_REQUEST['upah_makan'] : "";
 $upah_lembur = isset($_REQUEST['upah_lembur']) ? $_REQUEST['upah_lembur'] : "";
-$tools = isset($_REQUEST['tools']) ? $_REQUEST['tools'] : "";
+$tools = isset($_REQUEST['tools']) ? $_REQUEST['tools'] : ""; 
 $bonus = isset($_REQUEST['bonus']) ? $_REQUEST['bonus'] : "";
 
 // rekap

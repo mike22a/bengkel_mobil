@@ -26,7 +26,9 @@ function rounding($val)
 $mulai = isset($_REQUEST['mulai']) ? $_REQUEST['mulai'] : ''; 
 $selesai = isset($_REQUEST['selesai']) ? $_REQUEST['selesai'] : '';
 $cari = isset($_REQUEST['cari']) ? $_REQUEST['cari'] : '';
-$merah = isset($_REQUEST['jml_tgl_merah']) ? $_REQUEST['jml_tgl_merah'] : '';
+$merah = empty($_REQUEST['jml_tgl_merah']) ? 0 : $_REQUEST['jml_tgl_merah'];
+// print_r($_REQUEST);
+// echo $merah;
 
 $date1=date_create("$mulai");
 $date2=date_create("$selesai");
@@ -62,7 +64,7 @@ $jml_masuk_lembur = mysqli_fetch_object($tmp2);
 
 // cari jumlah tools total
 $tmp3 = mysqli_query($koneksi, "SELECT user.nama, SUM(cek_tools.id_tools) as tools FROM `user` left JOIN presensi_harian on user.id_user=presensi_harian.id_user LEFT JOIN cek_tools ON presensi_harian.id_harian=cek_tools.id_harian where user.id_user='$nama_id'");
-$tools = mysqli_fetch_object($tmp3)->tools; 
+$jml_tools = mysqli_fetch_object($tmp3)->tools; 
 
 // echo "$nama_id $mulai $selesai";
 // print_r($jml_masuk_lembur);
@@ -88,20 +90,22 @@ include 'smart.php';
 $total2 = $total1 + $bonus;
 
 // CEK SUDAH PERNAH REKAP BELUM
-$cek1 = mysqli_query($koneksi, "SELECT * FROM penggajian where tanggal_mulai <= '$mulai' and tanggal_selesai >= '$mulai' AND id_user='$nama_id'");
-$cek2 = mysqli_query($koneksi, "SELECT * FROM penggajian where tanggal_mulai <= '$selesai' and tanggal_selesai >= '$selesai'  AND id_user='$nama_id' ");
+$cek1 = mysqli_query($koneksi, "SELECT * FROM penggajian where 
+  tanggal_mulai <= '$mulai' and tanggal_selesai >= '$mulai' AND id_user='$nama_id'");
+$cek2 = mysqli_query($koneksi, "SELECT * FROM penggajian where 
+  tanggal_mulai <= '$selesai' and tanggal_selesai >= '$selesai'  AND id_user='$nama_id' ");
 // print_r(mysqli_fetch_object($cek1));
 // print_r($cek1);
 // print_r($cek2);
 // exit;
 
-if ($cek1 || $cek2) {
+if (mysqli_num_rows($cek1) || mysqli_num_rows($cek2)) {
   $tipe = 0;
   $note = 'Data sudah pernah direkap ';
 }else{
 // $query = mysqli_query($koneksi, "INSERT INTO penggajian values ('','$id', '$mulai','$selesai','$tanggal_gaji','$bonus','$bobot_total','$lembur','$tools','$masuk','$rekap_upah_lembur','$rekap_upah_harian','$rekap_upah_makan')");
   $tipe = 1;
-  $note = 'Data sudah pernah direkap ';
+  $note = ' ';
 }
 ?>
 
@@ -115,6 +119,7 @@ if ($cek1 || $cek2) {
 
       <table class="table table-striped table-advance table-hover">
         <h4><i class="fa fa-angle-right"></i><?= $cari ?> (</i><?= $mulai ?> - </i><?= $selesai ?>)</h4>        
+        
         <form method="post" action="dashboard.php?tengah=penggajian_filter">
           <span class="input-group-btn">
             <button class="btn btn-default" aria-hidden="true" type="submit"> Kembali</button>
@@ -192,7 +197,7 @@ if ($cek1 || $cek2) {
                   <input name="rekap_upah_harian" type="hidden" class="form-control" value="<?= $rekap_upah_harian ?>">            
                   <input name="rekap_upah_lembur" type="hidden" class="form-control" value="<?= $rekap_upah_lembur ?>">            
                   <input name="rekap_upah_makan" type="hidden" class="form-control" value="<?= $rekap_upah_makan ?>">            
-                  <input name="tools" type="hidden" class="form-control" value="<?= $tools ?>">            
+                  <input name="tools" type="hidden" class="form-control" value="<?= $jml_tools ?>">            
                   <input name="bonus" type="hidden" class="form-control" value="<?= $bonus ?>">            
                   <input name="total" type="hidden" class="form-control" value="<?= $total2 ?>">            
                   <?php if ($tipe == 1)
@@ -245,6 +250,7 @@ if ($cek1 || $cek2) {
                   <h4> 2. Nilai Perhitungan </h4>
                   <h4> 3. Hasil kali nilai dan bobot </h4> -->
                   <h4> Perhitungan </h4>
+
                   <table class="table table-striped table-advance table-hover">
                     <thead>
                       <tr>                      

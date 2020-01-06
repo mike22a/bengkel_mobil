@@ -20,7 +20,9 @@ $nama_user = $_SESSION['nama'];
 $offset = ($noPage - 1) * $dataPerPage;
 //membuat variabel cari
 $cari = isset($_REQUEST['cari']) ? $_REQUEST['cari'] : '';
-$query = mysqli_query($koneksi, "SELECT workorder.*,user.nama FROM $loc_workorder WHERE nama_pelanggan like '%$cari%' limit $offset,$dataPerPage");
+$query = mysqli_query($koneksi, "SELECT workorder.*,user.nama FROM $loc_workorder WHERE nama_pelanggan like '%$cari%' order by tanggal desc  limit $offset,$dataPerPage");
+// $loc_workorder="workorder left join user on workorder.id_user=user.id_user";
+
 // $result = mysqli_fetch_object($query);
 
 // print_r($query);

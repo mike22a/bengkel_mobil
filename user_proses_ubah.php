@@ -15,17 +15,17 @@ $level = isset($_REQUEST['level']) ? $_REQUEST['level'] : "";
 
 // echo "$id_user $nama $username $level";
 
-if (cek_username1($usernamenew, $usernameold)) {
-	$query = mysqli_query($koneksi, "UPDATE user SET nama='$nama', username='$usernamenew', level='$level' WHERE id_user=$id_user");	
-}else{
-	echo "
-		<script>
-			alert('Username sudah terdaftar.');
-			window.history.go(-1);
-		</script>
-	";
-	exit;
-}
+// if (cek_username1($usernamenew, $usernameold)) {
+	$query = mysqli_query($koneksi, "UPDATE user SET nama='$nama', username='$usernamenew', level='$level' WHERE id_user='$id_user'");	
+// }else{
+// 	echo "
+// 		<script>
+// 			alert('Username sudah terdaftar.');
+// 			window.history.go(-1);
+// 		</script>
+// 	";
+// 	exit;
+// }
 
 
 

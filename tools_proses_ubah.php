@@ -14,6 +14,7 @@ $tool = isset($_REQUEST['tool']) ? $_REQUEST['tool'] : "";
 // update data ke cek tools
 $query3 = mysqli_query($koneksi, "DELETE FROM cek_tools WHERE id_harian=$id ");
 $k=0;
+
 while ($k < count($tool)) {	
 	$query4 = mysqli_query($koneksi, "INSERT INTO cek_tools values ('', '$id' , '$tool[$k]')");
 	// echo "$tool[$k]";

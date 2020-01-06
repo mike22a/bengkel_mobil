@@ -27,7 +27,7 @@ if ($password1 != $password2) {
 }
 
 if (cek_username1($username, '')) {
-	$query = mysqli_query($koneksi,"INSERT INTO user values ('', '$nama', '$username', '$password1', '$level')");
+	$query = mysqli_query($koneksi,"INSERT INTO user(nama,username,password,level) values ('$nama', '$username', '$password1', '$level')");
 }else{
 	echo "
 		<script>
@@ -37,6 +37,8 @@ if (cek_username1($username, '')) {
 	";
 }
 
+
+// exit;
 //cek apakah berhasil disimpan apa tidak
 if ($query) {
 	echo "

@@ -28,7 +28,7 @@ $nama_id = mysqli_fetch_object($tmp)->id_user;
 
 $query = mysqli_query($koneksi, "INSERT INTO workorder values ('', '$nama_id','$tanggal', '$nama_pelanggan', '$alamat', '$no_telp','$kendaraan','$keluhan', '$penilaian')");
 
-$query2 = mysqli_query($koneksi, "INSERT INTO presensi_harian values ('', '$nama_id','$tanggal', 'tidak')");
+// $query2 = mysqli_query($koneksi, "INSERT INTO presensi_harian values ('', '$nama_id','$tanggal', 'tidak')");
 
 // mau cari id_harian yang diinput
 $tmp3 = mysqli_query($koneksi, "SELECT * FROM presensi_harian WHERE tanggal='$tanggal' AND id_user='$nama_id' ");

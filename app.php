@@ -121,16 +121,16 @@ function aksesadmin() {
 // 	}
 // }
 
-// function cek_username1($new, $old) {
-// 	$koneksi = mysqli_connect("localhost","root","","bengkel_mobil");
-// 	$old1 = isset($old) ? $old : '';
-// 	$query2 = mysqli_query($koneksi, "select * from (select * from pengguna where username not IN ('$old1')) as p where username='$new'");
-// 	if (mysqli_num_rows($query2)>0) {
-// 		return FALSE;
-// 	}else{
-// 		return TRUE;
-// 	}
-// }
+function cek_username1($new, $old) {
+	$koneksi = mysqli_connect("localhost","root","","bengkel_mobil2");
+	$old1 = isset($old) ? $old : '';
+	$query2 = mysqli_query($koneksi, "select * from (select * from user where username not IN ('$old1')) as p where username='$new'");
+	if (mysqli_num_rows($query2)>0) {
+		return FALSE;
+	}else{
+		return TRUE;
+	}
+}
 
 function isWeekend($date) {
     return (date('N', strtotime($date)) >= 7);

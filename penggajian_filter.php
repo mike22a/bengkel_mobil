@@ -63,7 +63,7 @@ $cari = isset($_REQUEST['cari']) ? $_REQUEST['cari'] : '';
             <span class="input-group-btn"></span>
             <input name="selesai" type="date" class="form-control" value="$selesai">
             <span class="input-group-btn"></span>
-            <input name="jml_tgl_merah" type="int" class="form-control" placeholder="Jumlah Tanggal Merah">
+            <!-- <input name="jml_tgl_merah" type="int" class="form-control" placeholder="Jumlah Tanggal Merah"> -->
             <span class="input-group-btn"></span> 
             <span class="input-group-btn">
               <button class="btn btn-default glyphicon glyphicon-search" aria-hidden="true" type="submit"></button>

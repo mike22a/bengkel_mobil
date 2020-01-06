@@ -1,7 +1,9 @@
 <?php
 
 $tanggal = date("Y-m-d");
-$hari = $diff->d - $merah;
+$hari = $diff->d + 1 - $merah;
+// echo "$hari";
+// echo $merah;
 
 // $tmpHari = $hari;
 
@@ -47,7 +49,7 @@ function rumus($var,$min,$max){
 }
 
 // tools
-$query1 = mysqli_query($koneksi, "SELECT COUNT(*) as tools FROM user LEFT JOIN presensi_harian ON user.id_user=presensi_harian.id_user LEFT JOIN cek_tools on presensi_harian.id_harian=cek_tools.id_harian WHERE user.id_user='5' AND presensi_harian.masuk='ya' AND presensi_harian.tanggal BETWEEN '$mulai' AND '$selesai'");
+$query1 = mysqli_query($koneksi, "SELECT COUNT(*) as tools FROM user LEFT JOIN presensi_harian ON user.id_user=presensi_harian.id_user LEFT JOIN cek_tools on presensi_harian.id_harian=cek_tools.id_harian WHERE user.id_user='$nama_id' AND presensi_harian.masuk='ya' AND presensi_harian.tanggal BETWEEN '$mulai' AND '$selesai'");
 $tmp1 = mysqli_fetch_object($query1)->tools;
 if ($hari == 0) {
 	$tools = 0;
